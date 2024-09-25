@@ -24,23 +24,23 @@ async function tembak() {
         (item) => item.is_completed == false
       );
       if (questFalse.length > 0) {
-        console.log(
-          `quest partner yang belum kelar ada`,
-          questFalse.length,
-          `di akun ke ${tokens[index]}`
-        );
+        // console.log(
+        //   `quest partner yang belum kelar ada`,
+        //   questFalse.length,
+        //   `di akun ke ${tokens[index]}`
+        // );
         for (let indexs = 0; indexs < questFalse.length; indexs++) {
-          console.log(questFalse[indexs]);
+          // console.log(questFalse[indexs]);
           const tembakCompletee = await api.questPartnerComplete(
             tokens[index],
             questFalse[indexs].task_id
           );
-          console.log(tembakCompletee);
+          // console.log(tembakCompletee);
           const tembakCompleteRewardd = await api.questPartnerCompleteReward(
             tokens[index],
             questFalse[indexs].task_id
           );
-          console.log(tembakCompleteRewardd);
+          // console.log(tembakCompleteRewardd);
         }
       }
 
@@ -56,14 +56,15 @@ async function tembak() {
         dailyClaims: statusdailyClaim.can_claim,
       });
       if (data?.user.active_farm) {
-        console.log(`Akun ke ${index + 1} belum waktunya claim`);
+        console.log(`Akun ke ${index + 1} Sudah Farm`);
       } else {
         await api.farm(tokens[index]);
-        console.log(`Akun ke ${index + 1} sudah farm`);
+        console.log(`Akun ke ${index + 1} Belum Waktunya farm`);
       }
       if (data?.user?.daily_attempts > 0) {
         console.log("menajalankan game...");
         await api.gameStack(tokens[index]);
+        console.log("Done Menjalankan Game...")
       } else {
         console.log("tiket sudah habis");
       }
