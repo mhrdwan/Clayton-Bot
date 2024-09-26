@@ -19,6 +19,23 @@ const api = {
       console.error(error.response ? error.response.data : error.message);
     }
   },
+  claim: async function (token) {
+    try {
+      const response = await axios.post(
+        `${baseUrl}user/claim`,
+        {},
+        {
+          headers: {
+            "init-data": token,
+          },
+        }
+      );
+      //   console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error.response ? error.response.data : error.message);
+    }
+  },
   farm: async function (token) {
     try {
       const response = await axios.post(

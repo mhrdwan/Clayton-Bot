@@ -47,7 +47,7 @@ async function tembak() {
       console.table({
         no_akun: `${index + 1} / ${tokens.length}`,
         user: data?.user.first_name,
-        claim: data?.user.active_farm,
+        claim: data?.user.can_claim,
         tokens: data?.user.tokens,
         availableTicket: data?.user?.daily_attempts,
         level: status.level,
@@ -55,11 +55,15 @@ async function tembak() {
         current_xp: status.current_xp,
         dailyClaims: statusdailyClaim.can_claim,
       });
-      if (data?.user.active_farm) {
-        console.log(`Akun ke ${index + 1} Sudah Farm`);
-      } else {
+      if (data?.user.can_claim) {
+        console.log(`Akun ke ${index + 1} memulai claim`);
+        await api.claim(tokens[index]);
+        console.log('done memulai claim');
+        console.log(`Akun ke ${index + 1} memulai farm`);
         await api.farm(tokens[index]);
-        console.log(`Akun ke ${index + 1} Belum Waktunya farm`);
+        console.log('done memulai farm');
+      } else {
+        console.log(`Akun ke ${index + 1} sudah farm`);
       }
       if (data?.user?.daily_attempts > 0) {
         console.log("menajalankan game...");
